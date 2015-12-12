@@ -23,8 +23,18 @@ public class ProductDAO {
 	public static final String ID = "id";
 	public static final String NAME = "name";
 
-	private EntityManagerHelper emHelper = new EntityManagerHelper();
+	private EntityManagerHelper emHelper;
 
+	public ProductDAO() {
+		emHelper = new EntityManagerHelper();
+	}
+	
+	// Just for tests
+	public ProductDAO(EntityManagerHelper emHelper) {
+		this.emHelper = emHelper; 
+	}
+	
+	
 	private EntityManager getEntityManager() {
 		return emHelper.getEntityManager();
 	}

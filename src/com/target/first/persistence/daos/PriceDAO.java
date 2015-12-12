@@ -22,8 +22,17 @@ public class PriceDAO {
 	public static final String PRODUCT_ID = "productId";
 	public static final String PRICE = "price";
 
-	private EntityManagerHelper emHelper = new EntityManagerHelper();
+	private EntityManagerHelper emHelper;
 
+	public PriceDAO() {
+		emHelper = new EntityManagerHelper();
+	}
+	
+	// Just for tests
+	public PriceDAO(EntityManagerHelper emHelper) {
+		this.emHelper = emHelper; 
+	}
+	
 	private EntityManager getEntityManager() {
 		return emHelper.getEntityManager();
 	}
