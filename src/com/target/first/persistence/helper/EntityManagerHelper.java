@@ -27,9 +27,10 @@ public class EntityManagerHelper {
 	
 	
 	// Constructor just for tests
-	public EntityManagerHelper(EntityManagerFactory emf, ThreadLocal<EntityManager> threadLocal) {
+	public EntityManagerHelper(EntityManagerFactory emf, ThreadLocal<EntityManager> threadLocal, Logger logger) {
 		this.emf = emf;
 		this.threadLocal = threadLocal;
+		this.logger = logger;
 	}
 	
 	public EntityManager getEntityManager() {
