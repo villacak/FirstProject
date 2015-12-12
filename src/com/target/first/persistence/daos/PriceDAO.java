@@ -15,9 +15,9 @@ import com.target.first.persistence.helper.EntityManagerHelper;
  * added to each of these methods for data to be persisted to the JPA datastore.
  * 
  * @see com.target.first.persistence.entities.Price
- * @author MyEclipse Persistence Tools
+ * @author Klaus Villaca
  */
-public class PriceDAO implements IPriceDAO {
+public class PriceDAO {
 	// property constants
 	public static final String PRODUCT_ID = "productId";
 	public static final String PRICE = "price";

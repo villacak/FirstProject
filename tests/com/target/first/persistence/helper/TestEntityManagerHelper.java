@@ -34,7 +34,6 @@ public class TestEntityManagerHelper {
 		manager = EasyMock.createMock(EntityManager.class);
 		threadLocal = EasyMock.createMock(ThreadLocal.class);
 		logger = EasyMock.createMock(Logger.class);
-		
 		eTransaction =EasyMock.createMock(EntityTransaction.class);
 		
 		emHelper = new EntityManagerHelper(emf, threadLocal, logger);
@@ -43,6 +42,14 @@ public class TestEntityManagerHelper {
 	@After
 	public void tearDown() {
 		EasyMock.verify();
+		manager = null;
+		emf = null;
+		query = null;
+		manager = null;
+		threadLocal = null;
+		logger = null;
+		eTransaction = null;
+		emHelper = null;
 	}
 
 	@Test
@@ -171,7 +178,6 @@ public class TestEntityManagerHelper {
 	
 	@Test
 	public void testLog() {
-//		logger.log(Level.FINE, "Test", new Throwable());
 		logger.log(EasyMock.isA(Level.class), EasyMock.isA(String.class), EasyMock.isA(Throwable.class));
 		EasyMock.expectLastCall().atLeastOnce();
 		EasyMock.replay(logger);

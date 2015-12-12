@@ -16,14 +16,23 @@ import com.target.first.persistence.helper.EntityManagerHelper;
  * datastore.
  * 
  * @see com.target.first.persistence.entities.Category
- * @author MyEclipse Persistence Tools
+ * @author Klaus Villaca
  */
-public class CategoryDAO implements ICategoryDAO {
+public class CategoryDAO {
 	// property constants
 	public static final String DESCRIPTION = "description";
 
-	private EntityManagerHelper emHelper = new EntityManagerHelper();
-
+	private EntityManagerHelper emHelper;
+	
+	public CategoryDAO() {
+		emHelper = new EntityManagerHelper();
+	}
+	
+	// Just for tests
+	public CategoryDAO(EntityManagerHelper emHelper) {
+		this.emHelper = emHelper; 
+	}
+	
 	private EntityManager getEntityManager() {
 		return emHelper.getEntityManager();
 	}

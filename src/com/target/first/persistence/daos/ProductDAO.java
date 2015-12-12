@@ -16,9 +16,9 @@ import com.target.first.persistence.helper.EntityManagerHelper;
  * datastore.
  * 
  * @see com.target.first.persistence.entities.Product
- * @author MyEclipse Persistence Tools
+ * @author Klaus Villaca
  */
-public class ProductDAO implements IProductDAO {
+public class ProductDAO {
 	// property constants
 	public static final String ID = "id";
 	public static final String NAME = "name";
