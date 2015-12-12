@@ -281,8 +281,45 @@ public class TestCategory {
 		EasyMock.replay(emHelper, manager, query, listCategory);
 		
 		List<Category> tempList = categoryDAO.findByDescription("Test");
-		assertEquals("Category returned must be equal to the mocked", tempList, listCategory);
+		assertEquals("List<Category> returned must be equal to the mocked", tempList, listCategory);
 	}
 	
 	
+	@Test
+	public void testFindAllSuccess() {
+		System.out.println("testFindAllSuccess");
+		
+		emHelper.log("finding all Category instances", Level.INFO, null);
+		EasyMock.expectLastCall();
+		EasyMock.expect(emHelper.getEntityManager()).andReturn(manager).anyTimes();
+		EasyMock.expect(manager.createQuery(EasyMock.isA(String.class))).andReturn(query).anyTimes();
+		EasyMock.expect(query.getResultList()).andReturn(listCategory);
+		EasyMock.replay(emHelper, manager, query, listCategory);
+		
+		List<Category> tempList = categoryDAO.findAll();
+		assertEquals("List<Category> returned must be equal to the mocked", tempList, listCategory);
+	}
+	
+	
+	@SuppressWarnings("unused")
+	@Test
+	public void testFindAllException() {
+		System.out.println("testFindAllException");
+		
+		boolean exceptionThrown = false;
+		emHelper.log("finding all Category instances", Level.INFO, null);
+		emHelper.log(EasyMock.isA(String.class), EasyMock.isA(Level.class), EasyMock.isA(RuntimeException.class));
+		EasyMock.expectLastCall().anyTimes();
+		EasyMock.expect(emHelper.getEntityManager()).andReturn(manager).anyTimes();
+		EasyMock.expect(manager.createQuery(EasyMock.isA(String.class))).andThrow(new RuntimeException());
+		EasyMock.replay(emHelper, manager, query, listCategory);
+		try {
+			List<Category> tempList = categoryDAO.findAll();
+		} catch (Exception e) {
+			exceptionThrown = true;
+		}
+		assertTrue("Expect to throw an Exception", exceptionThrown);
+		EasyMock.verify(emHelper, manager, query, listCategory);
+	}
 }
+
