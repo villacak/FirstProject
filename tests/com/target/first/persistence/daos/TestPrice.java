@@ -46,6 +46,10 @@ public class TestPrice {
 		EasyMock.verify();
 		manager = null;
 		emHelper = null;
+		price = null;
+		query = null;
+		listPrice = null;
+		priceDAO = null;
 	}
 
 	

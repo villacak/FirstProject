@@ -46,6 +46,11 @@ public class TestProduct {
 		EasyMock.verify();
 		manager = null;
 		emHelper = null;
+		Product = null;
+		query = null;
+		listProduct = null;
+		
+		ProductDAO = null;
 	}
 
 	

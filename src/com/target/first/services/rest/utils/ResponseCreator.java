@@ -28,14 +28,16 @@ public class ResponseCreator {
 	public Response wrapResponseWithRightCode(final String preReadyResponse) {
 		Response responseToReturn = null;
 		if (preReadyResponse == null || preReadyResponse.trim().length() == 0) {
-			responseToReturn = ExceptionsToJson.parseExceptionReceived(null,HTTPEnums.CODE_404.getCode());
+			final ExceptionsToJson exceptionToJson = new ExceptionsToJson();
+			responseToReturn = exceptionToJson.parseExceptionReceived(null,HTTPEnums.CODE_404.getCode());
 		} else if (preReadyResponse != null && preReadyResponse.contains(CODE) && preReadyResponse.contains(MESSAGE)) {
 			try {
 				final JSONObject tempJson = new JSONObject(preReadyResponse);
 				final String code = tempJson.getString(CODE);
 				responseToReturn = Response.status(Integer.parseInt(code)).entity(preReadyResponse).build();
 			} catch (Exception je) {
-				responseToReturn = ExceptionsToJson.parseExceptionReceived(je, HTTPEnums.CODE_417.getCode());
+				final ExceptionsToJson exceptionToJson = new ExceptionsToJson();
+				responseToReturn = exceptionToJson.parseExceptionReceived(je, HTTPEnums.CODE_417.getCode());
 			}
 		} else {
 			responseToReturn = Response.ok(preReadyResponse).build();

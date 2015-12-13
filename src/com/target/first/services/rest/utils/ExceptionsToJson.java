@@ -24,7 +24,7 @@ public class ExceptionsToJson {
 	 * @param httpCode
 	 * @return
 	 */
-	public static Response parseExceptionReceived(final Exception exceptionToParse, final String httpCode) {
+	public Response parseExceptionReceived(final Exception exceptionToParse, final String httpCode) {
 		Response response = null;
 		String exceptionAsJsonString = parseExceptionReceivedToString(exceptionToParse, httpCode);
 		final String code = (httpCode != null)? httpCode : HTTPEnums.CODE_404.getCode();
@@ -40,7 +40,7 @@ public class ExceptionsToJson {
 	 * @param httpCode
 	 * @return
 	 */
-	public static String parseExceptionReceivedToString(final Exception exceptionToParse, final String httpCode) {
+	public String parseExceptionReceivedToString(final Exception exceptionToParse, final String httpCode) {
 		String exceptionAsJsonString = null;
 		final ExceptionMessageReturn messageToReturn = new ExceptionMessageReturn();
 		final String code = (httpCode != null)? httpCode : HTTPEnums.CODE_404.getCode();

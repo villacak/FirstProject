@@ -44,14 +44,16 @@ public class Search {
 				final ObjectMapper mapper = new ObjectMapper();
 				singleValueToReturn = mapper.writeValueAsString(productList);
 			} else {
-				singleValueToReturn = ExceptionsToJson.parseExceptionReceivedToString(null,
+				final ExceptionsToJson exceptionToJson = new ExceptionsToJson();
+				singleValueToReturn = exceptionToJson.parseExceptionReceivedToString(null,
 						HTTPEnums.CODE_404.getCode());
 			}
 		} catch (Exception e) {
+			final ExceptionsToJson exceptionToJson = new ExceptionsToJson();
 			if (e instanceof NullPointerException) {
-				singleValueToReturn = ExceptionsToJson.parseExceptionReceivedToString(e, HTTPEnums.CODE_404.getCode());
+				singleValueToReturn = exceptionToJson.parseExceptionReceivedToString(e, HTTPEnums.CODE_404.getCode());
 			} else {
-				singleValueToReturn = ExceptionsToJson.parseExceptionReceivedToString(e, HTTPEnums.CODE_417.getCode());
+				singleValueToReturn = exceptionToJson.parseExceptionReceivedToString(e, HTTPEnums.CODE_417.getCode());
 			}
 		}
 		ResponseCreator createResponse = new ResponseCreator();
@@ -65,7 +67,8 @@ public class Search {
 	 * @param ids
 	 * @return
 	 */
-	public String searchForIdList(final List<String> ids) {
+	public Response searchForIdList(final List<String> ids) {
+		Response response = null;
 		String multipleValuesToReturn = null;
 		Map<String, List<Product>> multipleIdsMap = new HashMap<>();
 		try {
@@ -87,21 +90,26 @@ public class Search {
 			}
 			
 			if (multipleIdsMap.size() == 0) {
-				multipleValuesToReturn = ExceptionsToJson.parseExceptionReceivedToString(null,
+				final ExceptionsToJson exceptionToJson = new ExceptionsToJson();
+				multipleValuesToReturn = exceptionToJson.parseExceptionReceivedToString(null,
 						HTTPEnums.CODE_404.getCode());
 			}
 			
 			final ObjectMapper mapper = new ObjectMapper();
 			multipleValuesToReturn = mapper.writeValueAsString(multipleIdsMap);
 		} catch (Exception e) {
+			final ExceptionsToJson exceptionToJson = new ExceptionsToJson();
 			if (e instanceof NullPointerException) {
-				multipleValuesToReturn = ExceptionsToJson.parseExceptionReceivedToString(e,
+				multipleValuesToReturn = exceptionToJson.parseExceptionReceivedToString(e,
 						HTTPEnums.CODE_404.getCode());
 			} else {
-				multipleValuesToReturn = ExceptionsToJson.parseExceptionReceivedToString(e,
+				multipleValuesToReturn = exceptionToJson.parseExceptionReceivedToString(e,
 						HTTPEnums.CODE_417.getCode());
 			}
 		}
-		return multipleValuesToReturn;
+		
+		ResponseCreator createResponse = new ResponseCreator();
+		response = createResponse.wrapResponseWithRightCode(multipleValuesToReturn);
+		return response;
 	}
 }

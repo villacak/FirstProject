@@ -15,7 +15,6 @@ import javax.ws.rs.core.Response;
 import com.target.first.persistence.enums.HTTPEnums;
 import com.target.first.services.rest.helper.Search;
 import com.target.first.services.rest.utils.ExceptionsToJson;
-import com.target.first.services.rest.utils.ResponseCreator;
 
 /**
  * Endpoints - Rest Interface
@@ -25,6 +24,29 @@ import com.target.first.services.rest.utils.ResponseCreator;
  */
 @Path("v1/product")
 public class ProductRest {
+	
+	// In order to make this class testable we sacrifice security and memory
+	private Search search;
+	private Response response;
+	private ExceptionsToJson exceptionToJson;
+	
+	public ProductRest() {
+		search = new Search();
+	}
+	
+	/**
+	 * REMOVE all constructors made for test if deploying in prod.
+	 * This is the only place where I did put this comment.
+	 * 
+	 * @param search
+	 * @param response
+	 */
+	public ProductRest(Search search, Response response, ExceptionsToJson exceptionToJson) {
+		this.search = search;
+		this.response = response;
+		this.exceptionToJson = exceptionToJson;
+	}
+	
 	
 	/**
 	 * Interface for search one ID and return a list or one Product
@@ -39,12 +61,12 @@ public class ProductRest {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response productDetailsById(@PathParam("id") final String id, final String jsonAsString) {
-		Response response = null;
-		if (id != null) {
-			final Search search = new Search();
+		if (id != null && id.trim().length() > 0) {
 			response = search.searchForSingleId(id);
 		} else {
-			response = ExceptionsToJson.parseExceptionReceived(null, HTTPEnums.CODE_404.getCode());
+			if (exceptionToJson == null)
+				exceptionToJson = new ExceptionsToJson();
+			response = exceptionToJson.parseExceptionReceived(null, HTTPEnums.CODE_404.getCode());
 		}		
 		return response;
 	}
@@ -63,15 +85,12 @@ public class ProductRest {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response productListDetailsById(@QueryParam("ids") List<String> ids, String jsonAsString) {
-		Response response = null;
-		String jsonAsStringToReturn = null;
-		if (ids != null) {
-			final Search search = new Search();
-			jsonAsStringToReturn = search.searchForIdList(ids);
-			ResponseCreator responseCreator = new ResponseCreator();
-			response = responseCreator.wrapResponseWithRightCode(jsonAsStringToReturn);
+		if (ids != null && ids.size() > 0) {
+			response = search.searchForIdList(ids);
 		} else {
-			response = ExceptionsToJson.parseExceptionReceived(null, HTTPEnums.CODE_404.getCode());
+			if (exceptionToJson == null)
+				exceptionToJson = new ExceptionsToJson();
+			response = exceptionToJson.parseExceptionReceived(null, HTTPEnums.CODE_404.getCode());
 		}
 		return response;
 	}

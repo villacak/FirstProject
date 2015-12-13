@@ -45,6 +45,10 @@ public class TestCategory {
 		EasyMock.verify();
 		manager = null;
 		emHelper = null;
+		category = null;
+		query = null;
+		listCategory = null;
+		categoryDAO = null;
 	}
 
 	
