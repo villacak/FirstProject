@@ -3,6 +3,7 @@ package com.target.first.services.rest.endpoints;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -27,6 +28,7 @@ public class ProductRest {
 	
 	/**
 	 * Interface for search one ID and return a list or one Product
+	 * e.g. : http://localhost:8080/FirstProject/rest/v1/product/detailsById/1000
 	 * 
 	 * @param id
 	 * @param jsonAsString
@@ -50,13 +52,14 @@ public class ProductRest {
 	
 	/**
 	 * Interface for search across an id list and return a list
+	 * e.g. : http://localhost:8080/FirstProject/rest/v1/product/listDetailsById?ids="1000"&ids="1002"
 	 * 
 	 * @param ids
 	 * @param jsonAsString
 	 * @return
 	 */
-	@POST
-	@Path("/listDetailsById/{ids: .*}")
+	@GET
+	@Path("/listDetailsById")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response productListDetailsById(@QueryParam("ids") List<String> ids, String jsonAsString) {

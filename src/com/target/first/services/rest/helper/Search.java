@@ -15,15 +15,15 @@ import com.target.first.services.rest.utils.ExceptionsToJson;
 import com.target.first.services.rest.utils.ResponseCreator;
 
 /**
- *  Method that make the search for one single ID or for an id list
- *  
+ * Method that make the search for one single ID or for an id list
+ * 
  * @author Klaus Villaca
  *
  */
 public class Search {
 
 	private static final String ID = "id";
-	
+
 	/**
 	 * Search using the persistence layer for all records with the same Id
 	 * 
@@ -38,13 +38,14 @@ public class Search {
 			final List<Product> productListTemp = productDAO.findByProperty(ID, Integer.parseInt(id));
 			if (productListTemp != null && productListTemp.size() > 0) {
 				final List<Product> productList = new ArrayList<>();
-				for(Product p: productListTemp) {
+				for (Product p : productListTemp) {
 					productList.add(p);
 				}
 				final ObjectMapper mapper = new ObjectMapper();
-				singleValueToReturn = mapper.writeValueAsString(productList);				
+				singleValueToReturn = mapper.writeValueAsString(productList);
 			} else {
-				singleValueToReturn = ExceptionsToJson.parseExceptionReceivedToString(null, HTTPEnums.CODE_404.getCode());
+				singleValueToReturn = ExceptionsToJson.parseExceptionReceivedToString(null,
+						HTTPEnums.CODE_404.getCode());
 			}
 		} catch (Exception e) {
 			if (e instanceof NullPointerException) {
@@ -57,8 +58,7 @@ public class Search {
 		response = createResponse.wrapResponseWithRightCode(singleValueToReturn);
 		return response;
 	}
-	
-	
+
 	/**
 	 * Search using the persistence layer for all records from an id list
 	 * 
@@ -70,19 +70,30 @@ public class Search {
 		Map<String, List<Product>> multipleIdsMap = new HashMap<>();
 		try {
 			final ProductDAO productDAO = new ProductDAO();
-			for(String id : ids) {
-				final List<Product> productList = productDAO.findByProperty(ID, id);
-				if (productList != null && productList.size() > 0) {
-					multipleIdsMap.put(id, productList);
+			for (String id : ids) {
+				final List<Product> productVectorList = productDAO.findByProperty(ID, Integer.parseInt(id));
+
+				// It's needed to extract from Vetor to ArrayList to don't have
+				// json parse problems.
+				if (productVectorList != null && productVectorList.size() > 0) {
+					final List<Product> productList = new ArrayList<>();
+					for (Product p : productVectorList) {
+						productList.add(p);
+					}
+					if (productList != null && productList.size() > 0) {
+						multipleIdsMap.put(id, productList);
+					}
 				}
 			}
 			final ObjectMapper mapper = new ObjectMapper();
 			multipleValuesToReturn = mapper.writeValueAsString(multipleIdsMap);
 		} catch (Exception e) {
 			if (e instanceof NullPointerException) {
-				multipleValuesToReturn = ExceptionsToJson.parseExceptionReceivedToString(e, HTTPEnums.CODE_404.getCode());
+				multipleValuesToReturn = ExceptionsToJson.parseExceptionReceivedToString(e,
+						HTTPEnums.CODE_404.getCode());
 			} else {
-				multipleValuesToReturn = ExceptionsToJson.parseExceptionReceivedToString(e, HTTPEnums.CODE_417.getCode());
+				multipleValuesToReturn = ExceptionsToJson.parseExceptionReceivedToString(e,
+						HTTPEnums.CODE_417.getCode());
 			}
 		}
 		return multipleValuesToReturn;
