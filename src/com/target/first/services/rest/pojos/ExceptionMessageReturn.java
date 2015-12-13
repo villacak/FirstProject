@@ -6,7 +6,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
+/**
+ * POJO - For parser to/from JAVA/JSON/JAVA
+ * 
+ * @author Klaus VIllaca
+ *
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ExceptionMessageReturn implements Serializable {
@@ -46,4 +51,11 @@ public class ExceptionMessageReturn implements Serializable {
 	public void setCause(String cause) {
 		this.cause = cause;
 	}
+
+	@Override
+	public String toString() {
+		return "ExceptionMessageReturn [code=" + code + ", message=" + message + ", cause=" + cause + "]";
+	}
+	
+	
 }

@@ -11,7 +11,13 @@ import org.glassfish.jersey.server.filter.EncodingFilter;
 
 
 
-
+/**
+ * From Jersey 2.0 up, it's preached to use extend the ResourceConfig to provide the setup
+ * necessary to the Jersey (that implements JAX-RS) work instead use web.xml
+ * 
+ * @author Klaus Villaca
+ *
+ */
 @ApplicationPath("/rest")
 public class Application extends ResourceConfig {
 	

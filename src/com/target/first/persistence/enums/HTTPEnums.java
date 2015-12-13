@@ -1,8 +1,11 @@
 package com.target.first.persistence.enums;
 
-//
-// Enum for get code and message, I would prefer have messages from properties file
-//
+/**
+ * Enum for get code and message, I would prefer have messages from properties file
+ * 
+ * @author Klaus Villaca
+ *
+ */
 public enum HTTPEnums {
 	CODE_404("404", "NOT FOUND"), CODE_500("500", "INTERNAL SERVER ERROR"), CODE_200("200", "OK"), CODE_417("417", "EXPECTATION FAILED");
 	

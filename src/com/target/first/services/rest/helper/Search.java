@@ -5,12 +5,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.core.Response;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.target.first.persistence.daos.ProductDAO;
 import com.target.first.persistence.entities.Product;
 import com.target.first.persistence.enums.HTTPEnums;
 import com.target.first.services.rest.utils.ExceptionsToJson;
+import com.target.first.services.rest.utils.ResponseCreator;
 
+/**
+ *  Method that make the search for one single ID or for an id list
+ *  
+ * @author Klaus Villaca
+ *
+ */
 public class Search {
 
 	private static final String ID = "id";
@@ -21,7 +30,8 @@ public class Search {
 	 * @param id
 	 * @return
 	 */
-	public String searchForSingleId(final String id) {
+	public Response searchForSingleId(final String id) {
+		Response response = null;
 		String singleValueToReturn = null;
 		try {
 			final ProductDAO productDAO = new ProductDAO();
@@ -43,7 +53,9 @@ public class Search {
 				singleValueToReturn = ExceptionsToJson.parseExceptionReceivedToString(e, HTTPEnums.CODE_417.getCode());
 			}
 		}
-		return singleValueToReturn;
+		ResponseCreator createResponse = new ResponseCreator();
+		response = createResponse.wrapResponseWithRightCode(singleValueToReturn);
+		return response;
 	}
 	
 	

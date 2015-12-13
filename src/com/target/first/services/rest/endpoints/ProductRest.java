@@ -16,6 +16,12 @@ import com.target.first.services.rest.helper.Search;
 import com.target.first.services.rest.utils.ExceptionsToJson;
 import com.target.first.services.rest.utils.ResponseCreator;
 
+/**
+ * Endpoints - Rest Interface
+ * 
+ * @author Klaus 
+ *
+ */
 @Path("v1/product")
 public class ProductRest {
 	
@@ -32,13 +38,9 @@ public class ProductRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response productDetailsById(@PathParam("id") final String id, final String jsonAsString) {
 		Response response = null;
-		String jsonAsStringToReturn = null;
 		if (id != null) {
 			final Search search = new Search();
-			jsonAsStringToReturn = search.searchForSingleId(id);
-			
-			ResponseCreator createResponse = new ResponseCreator();
-			response = createResponse.wrapResponseWithRightCode(jsonAsStringToReturn);
+			response = search.searchForSingleId(id);
 		} else {
 			response = ExceptionsToJson.parseExceptionReceived(null, HTTPEnums.CODE_404.getCode());
 		}		

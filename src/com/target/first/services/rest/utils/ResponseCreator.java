@@ -1,15 +1,18 @@
 package com.target.first.services.rest.utils;
 
 import javax.ws.rs.core.Response;
-
-import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
-
 import com.target.first.persistence.enums.HTTPEnums;
 
+/**
+ * Response creator if ok or exception
+ * 
+ * @author Klaus Villaca
+ *
+ */
 public class ResponseCreator {
 	
-	private static final String ERROR_JSON_OBJECT = "ExceptionMessageReturn";
+	private static final String MESSAGE = "message"; 
 	private static final String CODE = "code";
 	
 	public ResponseCreator() {
@@ -26,13 +29,12 @@ public class ResponseCreator {
 		Response responseToReturn = null;
 		if (preReadyResponse == null || preReadyResponse.trim().length() == 0) {
 			responseToReturn = ExceptionsToJson.parseExceptionReceived(null,HTTPEnums.CODE_404.getCode());
-		} else if (preReadyResponse != null && preReadyResponse.contains(ERROR_JSON_OBJECT)) {
+		} else if (preReadyResponse != null && preReadyResponse.contains(CODE) && preReadyResponse.contains(MESSAGE)) {
 			try {
 				final JSONObject tempJson = new JSONObject(preReadyResponse);
-				final JSONObject errorValues = tempJson.getJSONObject(ERROR_JSON_OBJECT);
-				final String code = errorValues.getString(CODE);
+				final String code = tempJson.getString(CODE);
 				responseToReturn = Response.status(Integer.parseInt(code)).entity(preReadyResponse).build();
-			} catch (JSONException je) {
+			} catch (Exception je) {
 				responseToReturn = ExceptionsToJson.parseExceptionReceived(je, HTTPEnums.CODE_417.getCode());
 			}
 		} else {

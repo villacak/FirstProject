@@ -7,10 +7,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+
+
+
 /**
+ * EntityManager Helper
+ * 
  * @author Klaus Villaca
  */
-
 public class EntityManagerHelper {
 	
 	protected EntityManagerFactory emf; 

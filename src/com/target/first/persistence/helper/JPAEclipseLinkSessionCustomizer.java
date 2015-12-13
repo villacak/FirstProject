@@ -10,9 +10,11 @@ import org.eclipse.persistence.sessions.Session;
 import org.eclipse.persistence.sessions.server.ServerSession;
 
 
-/*
+/**
  * I just let this class over here to be studied later on for Tomcat Data Source connection
  * 
+ * @author Eclipselink
+ *
  */
 public class JPAEclipseLinkSessionCustomizer implements SessionCustomizer {
 

@@ -1,16 +1,21 @@
 package com.target.first.services.rest.utils;
 
 import javax.ws.rs.core.Response;
-
 import org.apache.commons.lang.exception.ExceptionUtils;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.target.first.persistence.enums.HTTPEnums;
 import com.target.first.services.rest.pojos.ExceptionMessageReturn;
 
+/**
+ * Handles Exceptions to produce a JSON answer
+ * 
+ * @author Klaus Villaca
+ *
+ */
 public class ExceptionsToJson {
 	
-	private static final String HTTP_500 = "{\"ExceptionMessageReturn\": {\"code\":\"" + HTTPEnums.CODE_500.getCode() + "\", \"message\":\"" + HTTPEnums.CODE_500.getMessage() + "\"}}";
+	private static final String EXCEPTION_JSON_NAME = "ExceptionMessageReturn";
+	private static final String HTTP_500 = "{\"" + EXCEPTION_JSON_NAME + "\": {\"code\":\"" + HTTPEnums.CODE_500.getCode() + "\", \"message\":\"" + HTTPEnums.CODE_500.getMessage() + "\"}}";
 	
 	/**
 	 * Receive an exception plus http code and assemble a json string to return
@@ -28,6 +33,13 @@ public class ExceptionsToJson {
 	}
 
 	
+	/**
+	 * parse the Exception adding the http code to a JSON string
+	 * 
+	 * @param exceptionToParse
+	 * @param httpCode
+	 * @return
+	 */
 	public static String parseExceptionReceivedToString(final Exception exceptionToParse, final String httpCode) {
 		String exceptionAsJsonString = null;
 		final ExceptionMessageReturn messageToReturn = new ExceptionMessageReturn();
@@ -44,7 +56,7 @@ public class ExceptionsToJson {
 		
 		try {
 			final ObjectMapper mapper = new ObjectMapper();
-			exceptionAsJsonString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(messageToReturn);
+			exceptionAsJsonString = mapper.writeValueAsString(messageToReturn);
 		} catch (Exception e) {
 			// It it fails we assembly something to return, that will be 500, Internal Server Error
 			// I'm using a string to don't have to handle exceptions
@@ -52,7 +64,6 @@ public class ExceptionsToJson {
 			// factory to reach this method
 			exceptionAsJsonString = HTTP_500;
 		}
-		
 		return exceptionAsJsonString;
 	}
 	
