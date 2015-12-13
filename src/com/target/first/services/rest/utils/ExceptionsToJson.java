@@ -44,8 +44,8 @@ public class ExceptionsToJson {
 		String exceptionAsJsonString = null;
 		final ExceptionMessageReturn messageToReturn = new ExceptionMessageReturn();
 		final String code = (httpCode != null)? httpCode : HTTPEnums.CODE_404.getCode();
-		final String cause = (ExceptionUtils.getRootCauseMessage(exceptionToParse) != null)? ExceptionUtils.getRootCauseMessage(exceptionToParse) : null;
-		final String message = (exceptionToParse.getMessage() != null)? exceptionToParse.getMessage() : HTTPEnums.CODE_404.getMessage();
+		final String cause = (exceptionToParse != null && ExceptionUtils.getRootCauseMessage(exceptionToParse) != null)? ExceptionUtils.getRootCauseMessage(exceptionToParse) : null;
+		final String message = (exceptionToParse != null && exceptionToParse.getMessage() != null)? exceptionToParse.getMessage() : HTTPEnums.CODE_404.getMessage();
 		
 		messageToReturn.setMessage(message);
 		messageToReturn.setCause(cause);

@@ -1,5 +1,6 @@
 package com.target.first.services.rest.utils;
 
+import javax.json.JsonException;
 import javax.ws.rs.core.Response;
 import org.codehaus.jettison.json.JSONObject;
 import com.target.first.persistence.enums.HTTPEnums;
@@ -19,6 +20,8 @@ public class ResponseCreator {
 		super();
 	}
 	
+	
+	
 	/**
 	 * Receive a response that may be a good or bad data wrap in the appropriated response
 	 * 
@@ -35,12 +38,21 @@ public class ResponseCreator {
 				final JSONObject tempJson = new JSONObject(preReadyResponse);
 				final String code = tempJson.getString(CODE);
 				responseToReturn = Response.status(Integer.parseInt(code)).entity(preReadyResponse).build();
+			} catch (Exception e) {
+				final ExceptionsToJson exceptionToJson = new ExceptionsToJson();
+				responseToReturn = exceptionToJson.parseExceptionReceived(e, HTTPEnums.CODE_417.getCode());
+			}
+		} else {
+			try {
+				// Just to validate the json
+				@SuppressWarnings("unused")
+				final JSONObject tempJson = new JSONObject(preReadyResponse);
+				responseToReturn = Response.ok(preReadyResponse).build();
 			} catch (Exception je) {
 				final ExceptionsToJson exceptionToJson = new ExceptionsToJson();
 				responseToReturn = exceptionToJson.parseExceptionReceived(je, HTTPEnums.CODE_417.getCode());
 			}
-		} else {
-			responseToReturn = Response.ok(preReadyResponse).build();
+			
 		}
 		return responseToReturn;
 	}
