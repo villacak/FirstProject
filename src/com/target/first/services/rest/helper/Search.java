@@ -85,6 +85,12 @@ public class Search {
 					}
 				}
 			}
+			
+			if (multipleIdsMap.size() == 0) {
+				multipleValuesToReturn = ExceptionsToJson.parseExceptionReceivedToString(null,
+						HTTPEnums.CODE_404.getCode());
+			}
+			
 			final ObjectMapper mapper = new ObjectMapper();
 			multipleValuesToReturn = mapper.writeValueAsString(multipleIdsMap);
 		} catch (Exception e) {
