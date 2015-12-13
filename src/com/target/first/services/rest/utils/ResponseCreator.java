@@ -8,8 +8,13 @@ import org.codehaus.jettison.json.JSONObject;
 import com.target.first.persistence.enums.HTTPEnums;
 
 public class ResponseCreator {
+	
 	private static final String ERROR_JSON_OBJECT = "ExceptionMessageReturn";
 	private static final String CODE = "code";
+	
+	public ResponseCreator() {
+		super();
+	}
 	
 	/**
 	 * Receive a response that may be a good or bad data wrap in the appropriated response

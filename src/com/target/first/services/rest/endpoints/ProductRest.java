@@ -36,8 +36,9 @@ public class ProductRest {
 		if (id != null) {
 			final Search search = new Search();
 			jsonAsStringToReturn = search.searchForSingleId(id);
-			ResponseCreator respCreator = new ResponseCreator();
-			response = respCreator.wrapResponseWithRightCode(jsonAsStringToReturn);
+			
+			ResponseCreator createResponse = new ResponseCreator();
+			response = createResponse.wrapResponseWithRightCode(jsonAsStringToReturn);
 		} else {
 			response = ExceptionsToJson.parseExceptionReceived(null, HTTPEnums.CODE_404.getCode());
 		}		
@@ -62,8 +63,8 @@ public class ProductRest {
 		if (ids != null) {
 			final Search search = new Search();
 			jsonAsStringToReturn = search.searchForIdList(ids);
-			ResponseCreator respCreator = new ResponseCreator();
-			response = respCreator.wrapResponseWithRightCode(jsonAsStringToReturn);
+			ResponseCreator responseCreator = new ResponseCreator();
+			response = responseCreator.wrapResponseWithRightCode(jsonAsStringToReturn);
 		} else {
 			response = ExceptionsToJson.parseExceptionReceived(null, HTTPEnums.CODE_404.getCode());
 		}
