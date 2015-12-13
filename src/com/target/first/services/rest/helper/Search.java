@@ -1,5 +1,6 @@
 package com.target.first.services.rest.helper;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,8 +25,12 @@ public class Search {
 		String singleValueToReturn = null;
 		try {
 			final ProductDAO productDAO = new ProductDAO();
-			final List<Product> productList = productDAO.findByProperty(ID, id);
-			if (productList != null && productList.size() > 0) {
+			final List<Product> productListTemp = productDAO.findByProperty(ID, Integer.parseInt(id));
+			if (productListTemp != null && productListTemp.size() > 0) {
+				final List<Product> productList = new ArrayList<>();
+				for(Product p: productListTemp) {
+					productList.add(p);
+				}
 				final ObjectMapper mapper = new ObjectMapper();
 				singleValueToReturn = mapper.writeValueAsString(productList);				
 			} else {

@@ -2,6 +2,9 @@ package com.target.first.persistence.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.util.List;
 
 
@@ -22,6 +25,7 @@ public class Category implements Serializable {
 	private String description;
 
 	//bi-directional many-to-one association to Product
+	@JsonBackReference
 	@OneToMany(mappedBy="categoryBean")
 	private List<Product> products;
 

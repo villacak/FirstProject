@@ -2,6 +2,9 @@ package com.target.first.persistence.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -26,6 +29,7 @@ public class Price implements Serializable {
 	private int productId;
 
 	//bi-directional many-to-one association to Product
+	@JsonBackReference
 	@OneToMany(mappedBy="priceBean")
 	private List<Product> products;
 

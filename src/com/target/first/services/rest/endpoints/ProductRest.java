@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
 import com.target.first.persistence.enums.HTTPEnums;
 import com.target.first.services.rest.helper.Search;
 import com.target.first.services.rest.utils.ExceptionsToJson;
-import com.target.first.services.rest.utils.ResponseUtils;
+import com.target.first.services.rest.utils.ResponseCreator;
 
 @Path("v1/product")
 public class ProductRest {
@@ -36,8 +36,8 @@ public class ProductRest {
 		if (id != null) {
 			final Search search = new Search();
 			jsonAsStringToReturn = search.searchForSingleId(id);
-			ResponseUtils rUtils = new ResponseUtils();
-			response = rUtils.wrapResponseWithRightCode(jsonAsStringToReturn);
+			ResponseCreator respCreator = new ResponseCreator();
+			response = respCreator.wrapResponseWithRightCode(jsonAsStringToReturn);
 		} else {
 			response = ExceptionsToJson.parseExceptionReceived(null, HTTPEnums.CODE_404.getCode());
 		}		
@@ -62,8 +62,8 @@ public class ProductRest {
 		if (ids != null) {
 			final Search search = new Search();
 			jsonAsStringToReturn = search.searchForIdList(ids);
-			ResponseUtils rUtils = new ResponseUtils();
-			response = rUtils.wrapResponseWithRightCode(jsonAsStringToReturn);
+			ResponseCreator respCreator = new ResponseCreator();
+			response = respCreator.wrapResponseWithRightCode(jsonAsStringToReturn);
 		} else {
 			response = ExceptionsToJson.parseExceptionReceived(null, HTTPEnums.CODE_404.getCode());
 		}

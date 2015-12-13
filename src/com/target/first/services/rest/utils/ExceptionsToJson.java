@@ -4,7 +4,6 @@ import javax.ws.rs.core.Response;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.target.first.persistence.enums.HTTPEnums;
 import com.target.first.services.rest.pojos.ExceptionMessageReturn;
@@ -33,19 +32,20 @@ public class ExceptionsToJson {
 		String exceptionAsJsonString = null;
 		final ExceptionMessageReturn messageToReturn = new ExceptionMessageReturn();
 		final String code = (httpCode != null)? httpCode : HTTPEnums.CODE_404.getCode();
-		final String message = (exceptionToParse.getLocalizedMessage() != null)? exceptionToParse.getLocalizedMessage() : HTTPEnums.CODE_404.getMessage();
-		final String cause = (ExceptionUtils.getRootCauseMessage(exceptionToParse).toString() != null)? ExceptionUtils.getRootCauseMessage(exceptionToParse).toString() : null;
+		final String cause = (ExceptionUtils.getRootCauseMessage(exceptionToParse) != null)? ExceptionUtils.getRootCauseMessage(exceptionToParse) : null;
+		final String message = (exceptionToParse.getMessage() != null)? exceptionToParse.getMessage() : HTTPEnums.CODE_404.getMessage();
+		
 		messageToReturn.setMessage(message);
 		messageToReturn.setCause(cause);
 		messageToReturn.setCode(code);
-		
+				
 		// I could add a switch to make it more 'intelligent' and depending upon exception
 		// produce a better response using more diversified HTTP response codes to reflect a better code - response
 		
-		final ObjectMapper mapper = new ObjectMapper();
 		try {
-			exceptionAsJsonString = mapper.writeValueAsString(messageToReturn);
-		} catch (JsonProcessingException e) {
+			final ObjectMapper mapper = new ObjectMapper();
+			exceptionAsJsonString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(messageToReturn);
+		} catch (Exception e) {
 			// It it fails we assembly something to return, that will be 500, Internal Server Error
 			// I'm using a string to don't have to handle exceptions
 			// Technically all messages should come from a properties file and also have a exception

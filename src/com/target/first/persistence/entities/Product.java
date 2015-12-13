@@ -1,7 +1,17 @@
 package com.target.first.persistence.entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 /**
@@ -23,11 +33,13 @@ public class Product implements Serializable {
 	private String name;
 
 	//bi-directional many-to-one association to Category
+	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name="category")
 	private Category categoryBean;
 
 	//bi-directional many-to-one association to Price
+	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name="price")
 	private Price priceBean;
