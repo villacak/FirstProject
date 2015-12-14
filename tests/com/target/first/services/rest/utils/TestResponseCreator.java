@@ -72,15 +72,4 @@ public class TestResponseCreator {
 		assertNotNull("Expected to receive a response", resp);
 		assertEquals("Expected to received an 404 error in the response", 404, resp.getStatus());
 	}
-	
-	@Test
-	public void  testWrapResponseWithRightCodeSuccessPayloadWithException() {
-		System.out.println("testWrapResponseWithRightCodeSuccessPayloadWithException");
-		
-		final String dummyJSON = "{\"id\":\"300\", \"productDescription\": \"Product number 1\"";
-		ResponseCreator responseCreator = new ResponseCreator(); 
-		Response resp = responseCreator.wrapResponseWithRightCode(dummyJSON);
-		assertNotNull("Expected to receive a response", resp);
-		assertEquals("Expected to received an 417 error in the response", 417, resp.getStatus());
-	}
 }

@@ -45,16 +45,7 @@ public class ResponseCreator {
 				responseToReturn = exceptionToJson.parseExceptionReceived(e, HTTPEnums.CODE_417.getCode());
 			}
 		} else {
-			try {
-				// Just to validate the json
-				@SuppressWarnings("unused")
-				final JSONObject tempJson = new JSONObject(preReadyResponse);
-				responseToReturn = Response.ok(preReadyResponse).build();
-			} catch (Exception je) {
-				final ExceptionsToJson exceptionToJson = new ExceptionsToJson();
-				responseToReturn = exceptionToJson.parseExceptionReceived(je, HTTPEnums.CODE_417.getCode());
-			}
-			
+			responseToReturn = Response.ok(preReadyResponse).build();
 		}
 		return responseToReturn;
 	}

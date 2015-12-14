@@ -23,7 +23,20 @@ import com.target.first.services.rest.utils.ResponseCreator;
 public class Search {
 
 	private static final String ID = "id";
+	
+	private ProductDAO productDAO;
+	
 
+	
+	public Search() {
+		productDAO = new ProductDAO();
+	}
+	
+	public Search(ProductDAO productDAO) {
+		this.productDAO = productDAO;
+	}
+	
+	
 	/**
 	 * Search using the persistence layer for all records with the same Id
 	 * 
@@ -34,7 +47,7 @@ public class Search {
 		Response response = null;
 		String singleValueToReturn = null;
 		try {
-			final ProductDAO productDAO = new ProductDAO();
+//			final ProductDAO productDAO = new ProductDAO();
 			final List<Product> productListTemp = productDAO.findByProperty(ID, Integer.parseInt(id));
 			if (productListTemp != null && productListTemp.size() > 0) {
 				final List<Product> productList = new ArrayList<>();
@@ -57,6 +70,7 @@ public class Search {
 			}
 		}
 		ResponseCreator createResponse = new ResponseCreator();
+
 		response = createResponse.wrapResponseWithRightCode(singleValueToReturn);
 		return response;
 	}
@@ -72,7 +86,7 @@ public class Search {
 		String multipleValuesToReturn = null;
 		Map<String, List<Product>> multipleIdsMap = new HashMap<>();
 		try {
-			final ProductDAO productDAO = new ProductDAO();
+//			final ProductDAO productDAO = new ProductDAO();
 			for (String id : ids) {
 				final List<Product> productVectorList = productDAO.findByProperty(ID, Integer.parseInt(id));
 
@@ -93,10 +107,10 @@ public class Search {
 				final ExceptionsToJson exceptionToJson = new ExceptionsToJson();
 				multipleValuesToReturn = exceptionToJson.parseExceptionReceivedToString(null,
 						HTTPEnums.CODE_404.getCode());
+			} else {
+				final ObjectMapper mapper = new ObjectMapper();
+				multipleValuesToReturn = mapper.writeValueAsString(multipleIdsMap);
 			}
-			
-			final ObjectMapper mapper = new ObjectMapper();
-			multipleValuesToReturn = mapper.writeValueAsString(multipleIdsMap);
 		} catch (Exception e) {
 			final ExceptionsToJson exceptionToJson = new ExceptionsToJson();
 			if (e instanceof NullPointerException) {
