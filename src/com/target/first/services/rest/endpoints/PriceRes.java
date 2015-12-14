@@ -50,7 +50,7 @@ public class PriceRes {
 	
 	/**
 	 * Interface for search one ID and return a list or one Price associated with that ID
-	 * e.g. : http://localhost:8080/FirstProject/rest/v1/product/detailsById/1000
+	 * e.g. : http://localhost:8080/FirstProject/rest/v1/price/detailsById/1000
 	 * 
 	 * @param id
 	 * @param jsonAsString
@@ -74,7 +74,7 @@ public class PriceRes {
 	
 	/**
 	 * Interface for search across an id list and return a price list associated with that id
-	 * e.g. : http://localhost:8080/FirstProject/rest/v1/product/listDetailsById?ids="1000"&ids="1002"
+	 * e.g. : http://localhost:8080/FirstProject/rest/v1/price/listDetailsById?ids="1000"&ids="1002"
 	 * 
 	 * @param ids
 	 * @param jsonAsString
