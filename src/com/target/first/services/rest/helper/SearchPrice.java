@@ -49,7 +49,7 @@ public class SearchPrice {
 			if (priceListTemp != null && priceListTemp.size() > 0) {
 				final List<Price> priceList = new ArrayList<>();
 				for (Price p : priceListTemp) {
-					priceListTemp.add(p);
+					priceList.add(p);
 				}
 				final ObjectMapper mapper = new ObjectMapper();
 				singleValueToReturn = mapper.writeValueAsString(priceList);

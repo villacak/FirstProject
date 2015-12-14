@@ -19,18 +19,12 @@ import org.junit.Test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.target.first.persistence.daos.PriceDAO;
-import com.target.first.persistence.daos.ProductDAO;
-import com.target.first.persistence.entities.Category;
 import com.target.first.persistence.entities.Price;
-import com.target.first.persistence.entities.Product;
 
 public class TestSearchPrice {
 	
-	private static final String ID = "id";
-	
 	private SearchPrice search;
 	private PriceDAO priceDAO;
-	private Price price;
 	private List<Price> priceList;
 	
 	
@@ -42,6 +36,9 @@ public class TestSearchPrice {
 		price.setPk(1);
 		price.setPrice(new BigDecimal("199.09"));
 		price.setProductId(1000);
+		
+		priceList = new ArrayList<>();
+		priceList.add(price);
 		
 		search = new SearchPrice(priceDAO);
 	}
@@ -172,7 +169,7 @@ public class TestSearchPrice {
 		List<String> ids = new ArrayList<>();
 		ids.add(id);
 		
-		EasyMock.expect(priceDAO.findByProperty(ID, Integer.parseInt(id))).andReturn(new ArrayList<>());
+		EasyMock.expect(priceDAO.findByProductId(Integer.parseInt(id))).andReturn(new ArrayList<>());
 		EasyMock.replay(priceDAO);
 		
 		Response resp = search.searchForIdList(ids);
