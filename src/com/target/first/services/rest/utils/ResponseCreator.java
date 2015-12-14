@@ -1,8 +1,9 @@
 package com.target.first.services.rest.utils;
 
-import javax.json.JsonException;
 import javax.ws.rs.core.Response;
+
 import org.codehaus.jettison.json.JSONObject;
+
 import com.target.first.persistence.enums.HTTPEnums;
 
 /**
@@ -39,6 +40,7 @@ public class ResponseCreator {
 				final String code = tempJson.getString(CODE);
 				responseToReturn = Response.status(Integer.parseInt(code)).entity(preReadyResponse).build();
 			} catch (Exception e) {
+				// Technically it's unreachable code.
 				final ExceptionsToJson exceptionToJson = new ExceptionsToJson();
 				responseToReturn = exceptionToJson.parseExceptionReceived(e, HTTPEnums.CODE_417.getCode());
 			}

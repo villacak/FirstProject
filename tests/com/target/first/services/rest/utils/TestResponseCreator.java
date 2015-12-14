@@ -34,6 +34,8 @@ public class TestResponseCreator {
 
 	@Test
 	public void  testWrapResponseWithRightCodeSuccessNoException() {
+		System.out.println("testWrapResponseWithRightCodeSuccessNoException");
+		
 		final String dummyJSON = "{\"id\":\"300\", \"productDescription\": \"Product number 1\"}";
 		ResponseCreator responseCreator = new ResponseCreator(); 
 		Response resp = responseCreator.wrapResponseWithRightCode(dummyJSON);
@@ -43,6 +45,8 @@ public class TestResponseCreator {
 	
 	@Test
 	public void  testWrapResponseWithRightCodeSuccessWithException() {
+		System.out.println("testWrapResponseWithRightCodeSuccessWithException");
+		
 		ResponseCreator responseCreator = new ResponseCreator(); 
 		Response resp = responseCreator.wrapResponseWithRightCode(jsonException);
 		assertNotNull("Expected to receive a response", resp);
@@ -51,6 +55,8 @@ public class TestResponseCreator {
 	
 	@Test
 	public void  testWrapResponseWithRightCodeEmpty() {
+		System.out.println("testWrapResponseWithRightCodeEmpty");
+		
 		ResponseCreator responseCreator = new ResponseCreator(); 
 		Response resp = responseCreator.wrapResponseWithRightCode("");
 		assertNotNull("Expected to receive a response", resp);
@@ -59,6 +65,8 @@ public class TestResponseCreator {
 	
 	@Test
 	public void  testWrapResponseWithRightCodeNull() {
+		System.out.println("testWrapResponseWithRightCodeNull");
+		
 		ResponseCreator responseCreator = new ResponseCreator(); 
 		Response resp = responseCreator.wrapResponseWithRightCode(null);
 		assertNotNull("Expected to receive a response", resp);
@@ -67,6 +75,8 @@ public class TestResponseCreator {
 	
 	@Test
 	public void  testWrapResponseWithRightCodeSuccessPayloadWithException() {
+		System.out.println("testWrapResponseWithRightCodeSuccessPayloadWithException");
+		
 		final String dummyJSON = "{\"id\":\"300\", \"productDescription\": \"Product number 1\"";
 		ResponseCreator responseCreator = new ResponseCreator(); 
 		Response resp = responseCreator.wrapResponseWithRightCode(dummyJSON);

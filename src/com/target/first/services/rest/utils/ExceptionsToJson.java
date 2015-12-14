@@ -58,6 +58,12 @@ public class ExceptionsToJson {
 			final ObjectMapper mapper = new ObjectMapper();
 			exceptionAsJsonString = mapper.writeValueAsString(messageToReturn);
 		} catch (Exception e) {
+			// This code is unreachable
+			// I still leave the catch because is preferred deal with it here that's the place to handle execptions
+			// then have to handle it level up, because it's needed to return the error to the user.
+			// I could just return the response with the error that Jersey would parse it nicely, though I think thats
+			// better provide something better to the user then just standard HTTP codes and messages.
+			
 			// It it fails we assembly something to return, that will be 500, Internal Server Error
 			// I'm using a string to don't have to handle exceptions
 			// Technically all messages should come from a properties file and also have a exception

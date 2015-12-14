@@ -12,6 +12,10 @@ import javax.ws.rs.container.ContainerResponseFilter;
  * Filter, where we can intercept the request before it reaches any REST interface, check data if necessary
  * then add your token, if using it, in the header response.
  * 
+ * To be able to test this class is necessary to override most of those methods from the interface as test frameworks
+ * just work well mocking values, form calls and returns though if it's needed to set values inside the mock object to
+ * retrieve it later, it will not work.
+ * 
  * @author Klaus Villaca
  *
  */
